@@ -45,7 +45,7 @@ function FullChart() {
   }, [data]);
 
   return (
-    <div className="bg-white w-full p-3 rounded-xl">
+    <div className="bg-white w-full h-full p-3 rounded-xl flex justify-center items-center min-h-60">
       {data ? (
         <Bar
           data={{
