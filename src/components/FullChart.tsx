@@ -36,8 +36,8 @@ function FullChart() {
         newLabels.push(date.toLocaleTimeString());
 
         newLow.push(item.low);
-        newAvg.push(item.open);
         newHigh.push(item.high);
+        newAvg.push((item.low + item.high) / 2);
       }
     }
 
