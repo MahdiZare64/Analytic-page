@@ -1,34 +1,75 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Chart as ChartJS, CategoryScale } from "chart.js/auto";
 import { Bar } from "react-chartjs-2";
 import { ChartColors } from "../utils/enums";
+import useOHLCVMutation from "../utils/mutations/useOHLCVMutation";
+import useOHLCVQuery from "../utils/mutations/useOHLCVQuery";
 
 ChartJS.register(CategoryScale);
 
 function FullChart() {
+  const [labels, setLabels] = useState<string[] | []>([]);
+  const [lowList, setLowList] = useState<number[] | []>([]);
+  const [avgList, setAvgList] = useState<number[] | []>([]);
+  const [highList, setHighList] = useState<number[] | []>([]);
+  const data = useOHLCVQuery();
+
+  const mutation = useOHLCVMutation();
+
+  useEffect(() => {
+    mutation.mutate();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    console.log(data);
+
+    const newLabels = [];
+    const newLow = [];
+    const newAvg = [];
+    const newHigh = [];
+
+    if (data) {
+      for (const item of data) {
+        const date = new Date(item.time * 1000);
+        newLabels.push(date.toLocaleTimeString());
+
+        newLow.push(item.low);
+        newAvg.push(item.open);
+        newHigh.push(item.high);
+      }
+    }
+
+    setLabels(newLabels);
+    setLowList(newLow);
+    setAvgList(newAvg);
+    setHighList(newHigh);
+  }, [data]);
+
   return (
     <div className="bg-white w-full p-3 rounded-xl">
       <Bar
         data={{
-          labels: ["time 1", "time 2", "time 3"],
+          labels: labels,
           datasets: [
             {
-              label: "hourly lower price",
+              label: "Hourly Lower Price",
               backgroundColor: ChartColors.green,
-              data: [1, 1, 1],
-              borderRadius: 8,
+              data: lowList,
+              borderRadius: 5,
             },
             {
-              label: "hourly average price",
+              label: "Hourly Average Price",
               backgroundColor: ChartColors.yellow,
-              data: [2, 2, 2],
-              borderRadius: 8,
+              data: avgList,
+              borderRadius: 5,
             },
             {
-              label: "hourly higher price",
+              label: "Hourly Higher Price",
               backgroundColor: ChartColors.red,
-              data: [3, 3, 7],
-              borderRadius: 8,
+              data: highList,
+              borderRadius: 5,
             },
           ],
         }}
