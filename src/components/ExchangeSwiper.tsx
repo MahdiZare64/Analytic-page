@@ -4,6 +4,7 @@ import ExchangeVolChart from "./ExchangeVolChart";
 import useExchangeMutation from "../utils/mutations/useExchangeMutation";
 import useExchangeQuery from "../utils/mutations/useExchangeQuery";
 import timeFormat from "../utils/timeFormar";
+import Spinner from "./Spinner";
 
 function ExchangeSwiper() {
   const [maxValue, setMaxValue] = useState<number | undefined>(undefined);
@@ -28,18 +29,22 @@ function ExchangeSwiper() {
   }, [data]);
 
   return (
-    <div className="bg-white w-full p-3 rounded-xl">
-      <Swiper spaceBetween={50} slidesPerView={1}>
-        {data?.map((item) => (
-          <SwiperSlide key={item.time}>
-            <ExchangeVolChart
-              label={timeFormat(item.time)}
-              value={item.volume}
-              maxValue={maxValue}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+    <div className="bg-white w-full h-full p-3 rounded-xl flex justify-center items-center min-h-60">
+      {data ? (
+        <Swiper spaceBetween={50} slidesPerView={1}>
+          {data?.map((item) => (
+            <SwiperSlide key={item.time}>
+              <ExchangeVolChart
+                label={timeFormat(item.time)}
+                value={item.volume}
+                maxValue={maxValue}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      ) : (
+        <Spinner />
+      )}
     </div>
   );
 }

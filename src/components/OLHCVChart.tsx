@@ -4,6 +4,7 @@ import { ChartColors } from "../utils/enums";
 import useOHLCVMutation from "../utils/mutations/useOHLCVMutation";
 import useOHLCVQuery from "../utils/mutations/useOHLCVQuery";
 import timeFormat from "../utils/timeFormar";
+import Spinner from "./Spinner";
 
 function FullChart() {
   const [labels, setLabels] = useState<string[] | []>([]);
@@ -45,34 +46,38 @@ function FullChart() {
 
   return (
     <div className="bg-white w-full p-3 rounded-xl">
-      <Bar
-        data={{
-          labels: labels,
-          datasets: [
-            {
-              label: "Hourly Lower Price",
-              backgroundColor: ChartColors.green,
-              data: lowList,
-              borderRadius: 5,
-            },
-            {
-              label: "Hourly Average Price",
-              backgroundColor: ChartColors.yellow,
-              data: avgList,
-              borderRadius: 5,
-            },
-            {
-              label: "Hourly Higher Price",
-              backgroundColor: ChartColors.red,
-              data: highList,
-              borderRadius: 5,
-            },
-          ],
-        }}
-        options={{
-          responsive: true,
-        }}
-      />
+      {data ? (
+        <Bar
+          data={{
+            labels: labels,
+            datasets: [
+              {
+                label: "Hourly Lower Price",
+                backgroundColor: ChartColors.green,
+                data: lowList,
+                borderRadius: 5,
+              },
+              {
+                label: "Hourly Average Price",
+                backgroundColor: ChartColors.yellow,
+                data: avgList,
+                borderRadius: 5,
+              },
+              {
+                label: "Hourly Higher Price",
+                backgroundColor: ChartColors.red,
+                data: highList,
+                borderRadius: 5,
+              },
+            ],
+          }}
+          options={{
+            responsive: true,
+          }}
+        />
+      ) : (
+        <Spinner />
+      )}
     </div>
   );
 }

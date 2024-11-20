@@ -10,7 +10,7 @@ interface Props {
 
 function ExchangeVolChart({ label, value, maxValue }: Props) {
   return (
-    <>
+    <div className="bg-white w-full h-full p-3 rounded-xl flex justify-center items-center min-h-60">
       <Bar
         data={{
           labels: [label],
@@ -33,7 +33,7 @@ function ExchangeVolChart({ label, value, maxValue }: Props) {
           },
         }}
       />
-    </>
+    </div>
   );
 }
 
