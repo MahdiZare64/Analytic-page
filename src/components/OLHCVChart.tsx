@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Chart as ChartJS, CategoryScale } from "chart.js/auto";
 import { Bar } from "react-chartjs-2";
 import { ChartColors } from "../utils/enums";
 import useOHLCVMutation from "../utils/mutations/useOHLCVMutation";
 import useOHLCVQuery from "../utils/mutations/useOHLCVQuery";
-
-ChartJS.register(CategoryScale);
+import timeFormat from "../utils/timeFormar";
 
 function FullChart() {
   const [labels, setLabels] = useState<string[] | []>([]);
   const [lowList, setLowList] = useState<number[] | []>([]);
   const [avgList, setAvgList] = useState<number[] | []>([]);
   const [highList, setHighList] = useState<number[] | []>([]);
+
   const data = useOHLCVQuery();
 
   const mutation = useOHLCVMutation();
@@ -23,8 +22,6 @@ function FullChart() {
   }, []);
 
   useEffect(() => {
-    console.log(data);
-
     const newLabels = [];
     const newLow = [];
     const newAvg = [];
@@ -32,8 +29,7 @@ function FullChart() {
 
     if (data) {
       for (const item of data) {
-        const date = new Date(item.time * 1000);
-        newLabels.push(date.toLocaleTimeString());
+        newLabels.push(timeFormat(item.time));
 
         newLow.push(item.low);
         newHigh.push(item.high);

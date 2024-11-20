@@ -8,7 +8,7 @@ const useOHLCVMutation = () => {
     mutationFn: getOHLCV,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["OHLCV"] });
-      console.log("success");
+      // console.log("success");
     },
   });
 };
