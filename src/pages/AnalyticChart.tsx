@@ -21,10 +21,10 @@ function Analytic() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-50">
-      <div className="container mx-auto">
-        <div className="w-full max-w-full flex pt-8">
-          <div className="w-7/12 pr-2">
+    <main className="min-h-screen h-full bg-gray-50 py-8">
+      <div className="container mx-auto px-2">
+        <div className="w-full max-w-full flex flex-wrap">
+          <div className="w-full pr-0 mb-4 md:w-7/12 md:pr-2 md:mb-0">
             <OLHCVChart
               higherVisible={higher}
               averageVisible={average}
@@ -32,7 +32,7 @@ function Analytic() {
             />
           </div>
 
-          <div className="w-5/12 pl-2">
+          <div className="w-full pl-0 md:w-5/12 md:pl-2">
             <ExchangeSwiper />
           </div>
         </div>
