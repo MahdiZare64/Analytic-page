@@ -6,7 +6,13 @@ import useOHLCVQuery from "../utils/mutations/useOHLCVQuery";
 import timeFormat from "../utils/timeFormar";
 import Spinner from "./Spinner";
 
-function FullChart() {
+interface Props {
+  higherVisible: boolean;
+  averageVisible: boolean;
+  lowerVisible: boolean;
+}
+
+function FullChart({ higherVisible, averageVisible, lowerVisible }: Props) {
   const [labels, setLabels] = useState<string[] | []>([]);
   const [lowList, setLowList] = useState<number[] | []>([]);
   const [avgList, setAvgList] = useState<number[] | []>([]);
@@ -56,18 +62,21 @@ function FullChart() {
                 backgroundColor: ChartColors.green,
                 data: lowList,
                 borderRadius: 5,
+                hidden: !higherVisible,
               },
               {
                 label: "Hourly Average Price",
                 backgroundColor: ChartColors.yellow,
                 data: avgList,
                 borderRadius: 5,
+                hidden: !averageVisible,
               },
               {
                 label: "Hourly Higher Price",
                 backgroundColor: ChartColors.red,
                 data: highList,
                 borderRadius: 5,
+                hidden: !lowerVisible,
               },
             ],
           }}
